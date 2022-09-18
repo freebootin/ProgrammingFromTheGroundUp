@@ -17,7 +17,7 @@
 .section .data
 
 data_items:	#These are the data items
-.long 3, 67, 34, 222, 45, 75, 54, 34, 44, 33, 22, 11, 66, 0
+.long 3, 67, 34, 222, 300, 45, 75, 54, 34, 44, 33, 22, 11, 66, 0, 255	# length: 15
 
 .section .text
 
@@ -30,7 +30,7 @@ _start:
 					# %eax is the biggest
 	
 start_loop:				# start loop
-	cmpl $0, %eax			# check to see if we've hit the end (Immediate Mode)
+	cmpl $255, %eax			# check to see if we've hit the end (Immediate Mode)
 	je loop_exit			# (Direct Addressing Mode)
 	incl %edi			# load next value (Register Addressing Mode)
 	movl data_items(,%edi,4), %eax	# (Index Addressing Mode)
