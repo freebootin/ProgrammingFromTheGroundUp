@@ -29,7 +29,8 @@ _start:
 					# a pointer to our current data.
 
 	movl %ecx, %edx			# Copy the address of data_items into %edx.
-	addl $64, %edx			# Add (16 - 1) * 4 (bytes) to the address of data_items.
+# Problem is probably with the memory size. How big is a long on a x64 system???
+	addl $60, %edx			# Add (16 - 1) * 4 (bytes) to the address of data_items.
 					# This should add up to the address of the final item.
 
 	movl (%ecx), %ebx		# First data_item is by default the largest.
