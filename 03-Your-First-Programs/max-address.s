@@ -4,51 +4,46 @@
 
 #VARIABLES:	The registers have the following uses:
 #
-#	%edi - Holds the index of the data item being examined
 #	%ebx - Largest data item found
 #	%eax - Current data item
+#	%ecx - Current data item address
+#	%edx - Final data item address
 #
 #	The following memory locations are used:
 #
-#	data_items - contains the item data. A 0 is used to
-#		     to terminate the data.
+#	data_items - contains the item data. 
+#		     
 #
 
 .section .data
 
 data_items:	#These are the data items
-.long 3, 67, 34, 222, 300, 45, 75, 54, 34, 44, 33, 22, 11, 66, 0, 255	# length: 15
+.long 3, 67, 34, 222, 300, 45, 75, 54, 34, 44, 33, 22, 11, 66, 0, 252	# length: 15
 
 .section .text
 
 .globl _start
 
 _start:
-	movl data_items, %edx		# Should move address of data_items into %edx.
-	addl $60, %edx			# Should add 14 * 4bytes to to address of data_items
-					# giving me the address of the last element of the list.
-					
-	movl $0, %edi			# move 0 into the address offset register (Immediate Mode)
-	movl data_items, %ecx		# Move the address of data_items into the current address
-					# register %ecx.
+	movl data_items, %ecx		# Copy the address of data_items into %ecx. %ecx is now
+					# a pointer to our current data.
 
-	movl %ecx, %eax			# load the first byte of data (Index Addressing Mode)
-	movl %eax, %ebx			# since this is the first item, (Register Addressing Mode)
-					# %eax is the biggest
-	
-start_loop:				# start loop
-	cmpl $255, %eax			# check to see if we've hit the end (Immediate Mode)
-	je loop_exit			# (Direct Addressing Mode)
-	incl %edi			# load next value (Register Addressing Mode)
-	movl data_items(,%edi,4), %eax	# (Index Addressing Mode)
-	cmpl %ebx, %eax			# compare values (Register Addressing Mode)
-	jle start_loop			# jump to loop beginning if the new (Direct Addressing Mode)
-					# one isn't bigger
-	movl %eax, %ebx			# move the value as the largest (Register Addressing Mode)
-	jmp start_loop			# jump to loop beginning (Direct Addressing Mode)
+	movl %ecx, %edx			# Copy the address of data_items into %edx.
+	addl $64, %edx			# Add (16 - 1) * 4 (bytes) to the address of data_items.
+					# This should add up to the address of the final item.
 
-loop_exit:
-# %ebx is the status code for the exit system call
-# and it already has the maximum number
+	movl (%ecx), %ebx		# First data_item is by default the largest.
+
+start_loop:
+	add $4, %ecx			# Advance to next data item	
+	cmpl %ecx, %edx			# Check if current address (ecx) is same as final (edx)
+	je exit_loop			# If true jump to exit_loop.
+	cmpl %ebx, (%ecx)		# Compaire current data_item to current largest value.
+	jle start_loop			# If new item isn't bigger, jump to start_loop
+
+	movl %eax, %ebx			# Move new largest value into %ebx.
+	jmp start_loop			# Back to start_loop.
+
+exit_loop:
 	movl $1, %eax			# 1 is the exit() syscall (Immediate Addressing Mode)
 	int $0x80			# (Immediate Addressing Mode)
