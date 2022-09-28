@@ -18,19 +18,18 @@
 .section .data
 
 data_items:	#These are the data items
-.long 3, 67, 34, 222, 300, 45, 75, 54, 34, 44, 33, 22, 11, 66, 0, 252	# length: 15
+.long 3, 67, 34, 222, 200, 45, 75, 54, 34, 44, 33, 22, 11, 66, 1, 252	# length: 15
 
 .section .text
 
 .globl _start
 
 _start:
-	movl data_items, %ecx		# Copy the address of data_items into %ecx. %ecx is now
+	movl $data_items, %ecx		# Copy the address of data_items into %ecx. %ecx is now
 					# a pointer to our current data.
 
 	movl %ecx, %edx			# Copy the address of data_items into %edx.
-# Problem is probably with the memory size. How big is a long on a x64 system???
-	addl $60, %edx			# Add (16 - 1) * 4 (bytes) to the address of data_items.
+	addl $64, %edx			# Add 16 * 4 (bytes) to the address of data_items.
 					# This should add up to the address of the final item.
 
 	movl (%ecx), %ebx		# First data_item is by default the largest.
@@ -42,7 +41,7 @@ start_loop:
 	cmpl %ebx, (%ecx)		# Compaire current data_item to current largest value.
 	jle start_loop			# If new item isn't bigger, jump to start_loop
 
-	movl %eax, %ebx			# Move new largest value into %ebx.
+	movl (%ecx), %ebx		# Move new largest value into %ebx.
 	jmp start_loop			# Back to start_loop.
 
 exit_loop:
