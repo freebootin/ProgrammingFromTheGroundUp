@@ -9,3 +9,5 @@ From this point on I am going to attempt to port the 32 bit examples into 64 bit
 Before completely abandoning x86 I'm first going to try to assembly everything using `gcc -m32` and see if that works. 
 
 Okay I finally figured it out. First you tell your assembler to generate 32 bit objects, `as -m32 -o [output].o [inputfile]`. Next tell the linker to link a 32 bit ELF binary, `ld -m elf_i386 -o [outputfile] [inputfile].o`.
+
+Also you will probably need to install gcc's multilib packages `gcc-multilib` and `g++-multilib`.
