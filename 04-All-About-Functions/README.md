@@ -11,3 +11,13 @@ Before completely abandoning x86 I'm first going to try to assembly everything u
 Okay I finally figured it out. First you tell your assembler to generate 32 bit objects, `as -m32 -o [output].o [inputfile]`. Next tell the linker to link a 32 bit ELF binary, `ld -m elf_i386 -o [outputfile] [inputfile].o`.
 
 Also you will probably need to install gcc's multilib packages `gcc-multilib` and `g++-multilib`.
+
+---
+## Review
+
+### Know the Concepts
+
+1. What are primitives? Primitives are the most basic functions provided by the operating system or run time. Everything else is built off of them.
+1. What are calling conventions? A calling convention is the process defined by a programming language for passing parameters to functions, call those functions, and receiving any returned value.
+1. What is the stack? The stack is a data structure provided to the program to store data during runtime. It can be conceptualised as a stack of paper, with each sheet having one value. These sheets can be added to or removed from the stack.
+1. How do `pushl` and `popl` affect the stack? `pushl` takes the value given it and places it on top of the stack, while `popl` takes the top most value of the stack, returns a copy to the address provided, then removes that value from the stack. What special-purpose register do they affect? They affect the `%esp` or 'stack pointer'. This is a register that holds a pointer to the top most item on the stack. Pushing to the stack decrements `%esp`, as the stack starts at the highest memory address and moves down, while popping from the stack increments `%esp`.
