@@ -21,3 +21,12 @@ Also you will probably need to install gcc's multilib packages `gcc-multilib` an
 1. What are calling conventions? A calling convention is the process defined by a programming language for passing parameters to functions, call those functions, and receiving any returned value.
 1. What is the stack? The stack is a data structure provided to the program to store data during runtime. It can be conceptualised as a stack of paper, with each sheet having one value. These sheets can be added to or removed from the stack.
 1. How do `pushl` and `popl` affect the stack? `pushl` takes the value given it and places it on top of the stack, while `popl` takes the top most value of the stack, returns a copy to the address provided, then removes that value from the stack. What special-purpose register do they affect? They affect the `%esp` or 'stack pointer'. This is a register that holds a pointer to the top most item on the stack. Pushing to the stack decrements `%esp`, as the stack starts at the highest memory address and moves down, while popping from the stack increments `%esp`.
+1. What are local variables and what are they used for? Local variables can be thought of as temporary storage for a function. They are allocated when the function is called and destroyed when it returns.
+1. Why are local variables so necessary in recursive functions? When you have a recursive function you will by definition have multiple copies of the function running at once, and each copy will need its own copy of relevant data. Local variables allow this as each copy of the function can store its own copy of the need data in its own local variable.
+1. What are `%ebp` and `%esp` used for? These two registers are used to store special pointers. `%ebp` stores the current base pointer which is used to access function parameters and local variables. If you know the base pointer address then you can use base pointer addressing mode to get each of the function parameters and local variables from the stack frame. `%esp` is the stack pointer which initially delimits that functions stack frame, but is address is then moved to `%ebp` so the stack pointer can be used for other things like pushing arguments to other functions.
+1. What is the stack frame? The stack frame is a section in memory that holds a functions local variables, parameters, and return address.
+
+---
+### Use the Concepts
+
+1. Write a function called `square` which receives one argument and returns the square of that argument.
