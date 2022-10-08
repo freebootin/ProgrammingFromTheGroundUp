@@ -29,4 +29,6 @@ Also you will probably need to install gcc's multilib packages `gcc-multilib` an
 ---
 ### Use the Concepts
 
-1. Write a function called `square` which receives one argument and returns the square of that argument.
+1. Write a function called `square` which receives one argument and returns the square of that argument. See `square.s`.
+1. Write a program to test your `square` function. See `square.s`.
+1. Convert the maximum program given in the Section called *Finding a Maximum Value* in Chapter 3 so that it is a function which takes a pointer to several values and returns their maximum. Write a program that calls maximum with 3 different lists, and returns the result of the last one as the program's exit status code. See `maximum-f.s`.
