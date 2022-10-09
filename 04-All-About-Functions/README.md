@@ -12,6 +12,8 @@ Okay I finally figured it out. First you tell your assembler to generate 32 bit 
 
 Also you will probably need to install gcc's multilib packages `gcc-multilib` and `g++-multilib`.
 
+A note on *Indexed Addressing*, the GNU Assembly doesn't seem to allow you to use pointer in a register as the beginning address. Trying to do this caused me some problems.
+
 ---
 ## Review
 
@@ -32,3 +34,11 @@ Also you will probably need to install gcc's multilib packages `gcc-multilib` an
 1. Write a function called `square` which receives one argument and returns the square of that argument. See `square.s`.
 1. Write a program to test your `square` function. See `square.s`.
 1. Convert the maximum program given in the Section called *Finding a Maximum Value* in Chapter 3 so that it is a function which takes a pointer to several values and returns their maximum. Write a program that calls maximum with 3 different lists, and returns the result of the last one as the program's exit status code. See `maximum-f.s`.
+1. Explain the problems that would arise without a standard calling convention. Without a standard calling convention you make it really hard to interoperate with functions written in other languages.
+
+---
+### Going Further
+
+1. Do you think it's better for a system to have a large set of primitives or a small one, assuming that the larger set can be written in terms of the smaller one? I would say have the least amount of primitives that you can get away with. Having a smaller set of primitives would be easier to implement, have less area for bugs, and constrain the end user less.  Having a larger set of primitives also means you have more things to learn about when developing for that system.
+
+1. The factorial function can be written non-recursively. Do so. See `factorial2.s`.
