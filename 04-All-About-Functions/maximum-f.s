@@ -30,20 +30,16 @@ maximum:
 	movl %esp, %ebp			# Move the stack pointer into the base pointer.
 
 	movl 8(%ebp), %ecx		# Get data pointer and move it to %ecx.
-	movl $0, %edi			# move 0 into the index register (Immediate Mode)
-	movl %edx(,%edi,4), %ebx	# load the first byte of data (Index Addressing Mode)
-	movl %ebx, %eax			# since this is the first item, (Register Addressing Mode)
-					# %eax is the biggest
+	movl (%ecx), %eax		# since this is the first item %eax is the biggest
 	
 start_loop:				# start loop
-	cmpl $0, %ebx			# check to see if we've hit the end (Immediate Mode)
+	cmpl $0, (%ecx)			# check to see if we've hit the end (Immediate Mode)
 	je loop_exit			# (Direct Addressing Mode)
-	incl %edi			# load next value (Register Addressing Mode)
-	movl %ecx(,%edi,4), %ebx	# (Index Addressing Mode)
-	cmpl %eax, %ebx			# compare values (Register Addressing Mode)
+	addl $4, %ecx			# Should increment to next address.
+	cmpl %eax, (%ecx)		# compare values (Register Addressing Mode)
 	jle start_loop			# jump to loop beginning if the new (Direct Addressing Mode)
 					# one isn't bigger
-	movl %ebx, %eax			# move the value as the largest (Register Addressing Mode)
+	movl (%ecx), %eax		# move the value as the largest (Register Addressing Mode)
 	jmp start_loop			# jump to loop beginning (Direct Addressing Mode)
 
 loop_exit:
