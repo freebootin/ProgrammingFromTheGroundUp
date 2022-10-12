@@ -10,3 +10,7 @@
 1. What is a buffer? A buffer is a segment of memory defined by the program for temporary storage of data determined at runtime. 
 1. What is the difference between the `.data` section and the `.bss` section? The `.data` section contains data defined when the program is written, while `.bss` contains buffers used to store data what will be defined during the programs execution.
 1. What are the system calls related to reading and writing files? The linux system calls related to reading and writing files are `open`, `write`, `read`, and `close`.
+
+### Use the Concepts
+
+1. Mdify the `toupper` program so that it reads from `STDIN` and writes to STDOUT instead of using the files on the command line. See `toupper2.s`.
