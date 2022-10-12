@@ -76,8 +76,8 @@ open_fd_in:
 #OPEN INPUT FILE
 	#open syscall
 	movl $SYS_OPEN, %eax
-	#input filename into %ebx
-	movl ST_ARGV_1(%ebp), %ebx
+	#move STDIN into %ebx
+	movl STDIN, %ebx
 	#read-only flag
 	movl $O_RDONLY, %ecx
 	#set permissions, dosn't really matter for reading
@@ -93,8 +93,8 @@ open_fd_out:
 #OPEN OUTPUT FILE
 	#open the file
 	movl $SYS_OPEN, %eax
-	#output filename into %ebx
-	movl ST_ARGV_2(%ebp), %ebx
+	#move STDOUT into %ebx
+	movl STDOUT, %ebx
 	#flags for writing to the file
 	movl $O_CREAT_WRONLY_TRUNC, %ecx
 	#mode for new file (if it's created)
