@@ -73,38 +73,38 @@ _start:
 
 open_files:
 open_fd_in:
-#OPEN INPUT FILE
-	#open syscall
-	movl $SYS_OPEN, %eax
-	#move STDIN into %ebx
-	movl STDIN, %ebx
-	#read-only flag
-	movl $O_RDONLY, %ecx
-	#set permissions, dosn't really matter for reading
-	movl $0666, %edx
-	#call Linux
-	int $LINUX_SYSCALL
+# #OPEN INPUT FILE
+# 	#open syscall
+# 	movl $SYS_OPEN, %eax
+# 	#move STDIN into %ebx
+# 	movl STDIN, %ebx
+# 	#read-only flag
+# 	movl $O_RDONLY, %ecx
+# 	#set permissions, dosn't really matter for reading
+# 	movl $0666, %edx
+# 	#call Linux
+# 	int $LINUX_SYSCALL
 
 store_fd_in:
 	#save the given file discriptor
-	movl %eax, ST_FD_IN(%ebp)
+	movl $STDIN, ST_FD_IN(%ebp)
 
 open_fd_out:
 #OPEN OUTPUT FILE
-	#open the file
-	movl $SYS_OPEN, %eax
-	#move STDOUT into %ebx
-	movl STDOUT, %ebx
-	#flags for writing to the file
-	movl $O_CREAT_WRONLY_TRUNC, %ecx
-	#mode for new file (if it's created)
-	movl $0666, %edx
-	#call Linux
-	int $LINUX_SYSCALL
+# 	#open the file
+# 	movl $SYS_OPEN, %eax
+# 	#move STDOUT into %ebx
+# 	movl STDOUT, %ebx
+# 	#flags for writing to the file
+# 	movl $O_CREAT_WRONLY_TRUNC, %ecx
+# 	#mode for new file (if it's created)
+# 	movl $0666, %edx
+# 	#call Linux
+# 	int $LINUX_SYSCALL
 
 store_fd_out:
 	#store the file descriptor here
-	movl %eax, ST_FD_OUT(%ebp)
+	movl $STDOUT, ST_FD_OUT(%ebp)
 
 ## BEGIN MAIN LOOP ##
 read_loop_begin:
