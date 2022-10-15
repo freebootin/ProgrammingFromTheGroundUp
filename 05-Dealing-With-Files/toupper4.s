@@ -52,7 +52,7 @@
 .lcomm BUFFER_DATA, BUFFER_SIZE
 
 #Buffer to hold file descriptors.
-.equ FD_BUFFER_SIZE, 3
+.equ FD_BUFFER_SIZE, 100
 .lcomm FD_BUFFER, FD_BUFFER_SIZE
 
 
@@ -63,7 +63,7 @@
 .equ ST_FD_IN, -4
 .equ ST_FD_OUT, -8
 .equ ST_ARGC, 0		#Number of arguments
-.equ ST_ARGV_O, 4	#Name of program
+.equ ST_ARGV_0, 4	#Name of program
 .equ ST_ARGV_1, 8	#Input file name
 .equ ST_ARGV_2, 12	#Output file name
 
@@ -72,10 +72,17 @@
 _start:
 #Initialize program
 #Save stack pointer
-	movl %esp, %ebp
+# 	movl %esp, %ebp
+	movl $FD_BUFFER, %ebp	#move the addres of FD_BUFFER to ebp.
+
+	#Load FD_BUFFER with CLI arguments
+	popl ST_ARGC(%ebp)	#load argc
+	popl ST_ARGV_0(%ebp)	#load program name
+	popl ST_ARGV_1(%ebp)	#load input file name
+	popl ST_ARGV_2(%ebp)	#load output file name
 
 	#Allocate space for file discriptors on stack
-	subl $ST_SIZE_RESERVE, %esp
+# 	subl $ST_SIZE_RESERVE, %esp
 
 open_files:
 open_fd_in:
