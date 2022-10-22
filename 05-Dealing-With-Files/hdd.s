@@ -7,6 +7,7 @@
 
 # CONSTANTS
 
+.equ FD, 4
 # system call numbers
 .equ SYS_CLOSE, 6
 .equ SYS_OPEN, 5
@@ -40,19 +41,34 @@ out_file:
 
 .section .text
 
+.globl _start
+
 _start:
 
+	movl %esp, %ebp
+	
 # Create and open a file called `haynow.txt`.
 open_fd_out:
 	movl $SYS_OPEN, %eax			# Select open syscall
 	movl $out_file, %ebx			# Select output filename
-	movl $O_CREAT_WRONLY_TRUC, %ecx		# Set options
+	movl $O_CREAT_WRONLY_TRUNC, %ecx	# Set options
 	movl $0666, %edx			# Set permissions
 	int $LINUX_SYSCALL
 	
-	movl %eax, ST_FD_OUT(%ebp)		# Save file discriptor on stack
+	movl %eax, FD(%ebp)		# Save file discriptor on stack
 # Write "Hay diddle diddle!" into `haynow.txt`.
+	movl %eax, %ebx				# file discriptor
+	movl $msg, %ecx				# buffer start
+	movl $len, %edx				# buffer size
+	movl $SYS_WRITE, %eax
+	int $LINUX_SYSCALL
 
 # Close `haynow.txt`
+	movl FD(%ebp), %ebx
+	movl $SYS_CLOSE, %eax
+	int $LINUX_SYSCALL
 
 # Return 0.
+	movl $0, %ebx
+	movl $SYS_EXIT, %eax
+	int $LINUX_SYSCALL
