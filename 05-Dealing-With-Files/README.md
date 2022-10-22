@@ -16,3 +16,4 @@
 1. Mdify the `toupper` program so that it reads from `STDIN` and writes to STDOUT instead of using the files on the command line. See `toupper2.s`.
 1. Change the size of the buffer. See `toupper3.s`.
 1. Rewrite the program so that it uses storage in the `.bss` section rather than the stack to store the file descriptors. See `toupper4.s`.
+1. Write a program that will create a file called `heynow.txt` and write the words "Hay diddle diddle!" into it. See `hdd.s`
