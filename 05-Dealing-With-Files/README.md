@@ -17,3 +17,10 @@
 1. Change the size of the buffer. See `toupper3.s`.
 1. Rewrite the program so that it uses storage in the `.bss` section rather than the stack to store the file descriptors. See `toupper4.s`.
 1. Write a program that will create a file called `heynow.txt` and write the words "Hay diddle diddle!" into it. See `hdd.s`
+
+### Going Further
+
+1. What difference does the size of the buffer make? If the buffer is too small it will not hold all the data you want to store in it.  If you make it too big then you are just wasting memory.
+1. What error results can be returned by each of these system calls? Each of the system calls used in this chapter will return a value of -1 if an error occurs. And, most will set `errno` with a more detailed error. This is especially true for `open`.
+1. Make the program able to either operate on command-line arguments or use `STDIN` or `STDOUT` based on the number of command-line arguments specified by `ARGC`. See `toupper-cli.s`.
+1. Modify the program so that it checks the results of each system call, and prints out an error message to `STDOUT` when it occurs.
