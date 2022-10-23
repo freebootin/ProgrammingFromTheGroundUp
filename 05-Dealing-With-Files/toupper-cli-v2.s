@@ -79,16 +79,18 @@ _start:
 
 	# Check ARGC, if 0, use STDIN/STDOUT. If 2, use command line args
 	# Else, incorrect number of arguments, exit.
-	cmpl $0, ST_ARGC(%ebp)
-	movl $STDIN, ST_FD_IN(%ebp)	# Loading STDIN and STDOUT into 
-	movl $STDOUT, ST_FD_OUT(%ebp)	# file discriptors
-	jmp read_loop_begin		# jump to main loop
-	je exit
+	cmpl $1, ST_ARGC(%ebp)
+	je open_std_fd
 	cmpl $3, ST_ARGC(%ebp)
 	je open_files
 
 	# Wrong imputs, exit
 	jmp exit
+
+open_std_fd:
+	movl $STDIN, ST_FD_IN(%ebp)	# Loading STDIN and STDOUT into 
+	movl $STDOUT, ST_FD_OUT(%ebp)	# file discriptors
+	jmp read_loop_begin		# jump to main loop
 
 open_files:
 open_fd_in:
@@ -125,6 +127,9 @@ open_fd_out:
 	#call Linux
 	int $LINUX_SYSCALL
 
+	# Check for error code (-1)
+	cmpl $-1, %eax
+	je syscall_error
 store_fd_out:
 	#store the file descriptor here
 	movl %eax, ST_FD_OUT(%ebp)
@@ -141,6 +146,9 @@ read_loop_begin:
 	movl $BUFFER_SIZE, %edx
 	#size of buffer read is returned in %eax
 	int $LINUX_SYSCALL
+	# Check for error code (-1)
+	cmpl $-1, %eax
+	je syscall_error
 
 	#EXIT IF WE'VE REACHED THE END
 	#check for end of file marker
@@ -165,6 +173,9 @@ continue_read_loop:
 	#location of the buffer
 	movl $BUFFER_DATA, %ecx
 	int $LINUX_SYSCALL
+	# Check for error code (-1)
+	cmpl $-1, %eax
+	je syscall_error
 
 	#CONTINUE THE LOOP#
 	jmp read_loop_begin
@@ -177,10 +188,16 @@ end_loop:
 	movl $SYS_CLOSE, %eax
 	movl ST_FD_OUT(%ebp), %ebx
 	int $LINUX_SYSCALL
+	# Check for error code (-1)
+	cmpl $-1, %eax
+	je syscall_error
 
 	movl $SYS_CLOSE, %eax
 	movl ST_FD_IN(%ebp), %ebx
 	int $LINUX_SYSCALL
+	# Check for error code (-1)
+	cmpl $-1, %eax
+	je syscall_error
 
 exit:
 	## EXIT ##
