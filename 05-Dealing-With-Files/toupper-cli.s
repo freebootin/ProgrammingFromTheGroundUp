@@ -75,6 +75,9 @@ _start:
 	# Check ARGC, if 0, use STDIN/STDOUT. If 2, use command line args
 	# Else, incorrect number of arguments, exit.
 	cmpl $0, ST_ARGC(%ebp)
+	movl $STDIN, ST_FD_IN(%ebp)	# Loading STDIN and STDOUT into 
+	movl $STDOUT, ST_FD_OUT(%ebp)	# file discriptors
+	jmp read_loop_begin		# jump to main loop
 	je exit
 	cmpl $3, ST_ARGC(%ebp)
 	je open_files
