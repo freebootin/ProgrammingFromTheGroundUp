@@ -3,6 +3,8 @@
 ---
 ## Review
 
+- For some reason ARGC seems to include the name of the program. So two command line arguments would be have ARGC = 3.
+
 ### Know the Concepts
 
 1. Describe the lifecycle of a file descriptor. A file descriptor begins when it is requested from the operating system. The program requests a file from the OS by name, the OS then returns a file descriptor. This descriptor is included in all system calls that pertain to that file. Finally, when the file is closed the file descriptor is discarded as it is no longer needed.
