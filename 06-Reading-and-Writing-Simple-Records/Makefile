@@ -4,5 +4,8 @@ write-records:
 	ld -m elf_i386 write-record.o write-records.o -o write-records
 
 read-records:
+	as -32 read-record.s -o read-record.o
 	as -32 count-chars.s -o count-chars.o
 	as -32 write-newline.s -o write-newline.o
+	as -32 read-records.s -o read-records.o
+	ld read-record.o count-chars.o write-newline.o read-records.o -read-records
