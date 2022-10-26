@@ -16,7 +16,7 @@ read_record:
 	movl ST_FILEDES(%ebp), %ebx
 	movl ST_READ_BUFFER(%ebp), %ecx
 	movl $RECORD_SIZE, %edx
-	movl %SYS_READ, %eax
+	movl $SYS_READ, %eax
 	int $LINUX_SYSCALL
 	
 # Note- %eax has the return value, which we will gie back to our calling
