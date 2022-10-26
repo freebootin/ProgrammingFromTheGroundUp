@@ -58,7 +58,7 @@ record_read_loop:
 	addl $4, %esp
 	movl %eax, %edx
 	movl ST_OUTPUT_DESCRIPTOR(%ebp), %ebx
-	movl %SYS_WRITE, %eax
+	movl $SYS_WRITE, %eax
 	movl $RECORD_FIRSTNAME + record_buffer, %ecx
 	int $LINUX_SYSCALL
 
@@ -69,6 +69,6 @@ record_read_loop:
 	jmp record_read_loop
 
 finished_reading:
-	movl %SYS_EXIT, %eax
+	movl $SYS_EXIT, %eax
 	movl $0, %ebx
 	int $LINUX_SYSCALL
