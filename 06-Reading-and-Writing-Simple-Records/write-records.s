@@ -29,6 +29,11 @@ record1:
 	.byte 0
 	.endr
 
+	.ascii "Aries\0"
+	.rept 6 # Padding to 12 bytes
+	.byte 0
+	.endr
+
 	.long 45
 
 record2:
@@ -44,6 +49,11 @@ record2:
 
 	.ascii "2224 S Johannan St\nChicago, IL 12345\0"
 	.rept 203 # Padding to 240 bytes
+	.byte 0
+	.endr
+
+	.ascii "Cancer\0"
+	.rept 5 # Padding to 12 bytes
 	.byte 0
 	.endr
 
@@ -63,6 +73,10 @@ record3:
 	.ascii "500 W Oakland\nSan Diego, CA 54321\0"
 	.rept 206 # Padding to 240 bytes
 	.byte 0
+	.endr
+
+	.ascii "Sagittarius\0"
+	# No padding needed, already 12 bytes
 	.endr
 
 	.long 36
