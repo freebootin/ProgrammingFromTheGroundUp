@@ -43,44 +43,6 @@ file_name:
 
 _start:
 	movl %esp, %ebp
-	subl $4, %esp			# allocate space to hold file discriptor
-
-	movl $SYS_OPEN, %eax		# Open output file
-	movl $file_name, %ebx
-	movl $0101, %ecx		# Create file if not exist and open for writing
-
-# Output filename
-file_name:
-	.ascii "thirty.dat\0"
-	
-	.equ ST_FILE_DESCRIPTOR, -4
-	.globl _start
-
-
-_start:
-	movl %esp, %ebp
-	subl $4, %esp			# allocate space to hold file discriptor
-
-	movl $SYS_OPEN, %eax		# Open output file
-	movl $file_name, %ebx
-	movl $0101, %ecx		# Create file if not exist and open for writing
-	movl $0666, %edx
-	int $LINUX_SYSCALL
-
-	movl %eax, ST_FILE_DESCRIPTOR(%ebp)	# Store file discriptor
-
-
-# Output filename
-file_name:
-	.ascii "thirty.dat\0"
-	
-	.equ ST_FILE_DESCRIPTOR, -4
-	.equ LOOP_COUNTER, -8
-	.globl _start
-
-
-_start:
-	movl %esp, %ebp
 	subl $8, %esp			# allocate space to hold file discriptor/counter
 
 	movl $SYS_OPEN, %eax		# Open output file
