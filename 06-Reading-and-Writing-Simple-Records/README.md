@@ -15,4 +15,6 @@
 
 ### Use the Concepts
 
+1. Add another data member to the person structure defined in this chapter, and rewrite the reading and writing functions and programs to take them into account.
+
 ### Going Further

@@ -77,7 +77,6 @@ record3:
 
 	.ascii "Sagittarius\0"
 	# No padding needed, already 12 bytes
-	.endr
 
 	.long 36
 
