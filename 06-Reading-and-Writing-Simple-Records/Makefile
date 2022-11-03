@@ -1,3 +1,6 @@
+objects = add-year.o count-chars.o read-record.o read-records.o write-newline.o \
+	  write-record.o write-records.o
+
 write-records:
 	as -32 write-records.s -o write-records.o
 	as -32 write-record.s -o write-record.o
@@ -15,3 +18,6 @@ add-year:
 	as -32 read-record.s -o read-record.o
 	as -32 write-record.s -o write-record.o
 	ld -m elf_i386 add-year.o read-record.o write-record.o -o add-year
+
+clean:
+	rm $(objects)
