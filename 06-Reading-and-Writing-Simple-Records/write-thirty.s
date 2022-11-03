@@ -38,6 +38,7 @@ file_name:
 	.ascii "thirty.dat\0"
 	
 	.equ ST_FILE_DESCRIPTOR, -4
+	.equ LOOP_COUNTER, -8
 	.globl _start
 
 
