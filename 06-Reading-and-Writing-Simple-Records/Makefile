@@ -22,7 +22,7 @@ add-year:
 write-thirty:
 	as -32 write-thirty.s -o write-thirty.o
 	as -32 write-record.s -o write-record.o
-	ld -m elf_i386 write-thrity.o write-record.o
+	ld -m elf_i386 write-thirty.o write-record.o
 
 clean:
 	rm $(objects)
