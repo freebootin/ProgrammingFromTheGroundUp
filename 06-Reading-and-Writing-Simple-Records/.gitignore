@@ -1,0 +1,7 @@
+add-year.o
+count-chars.o
+read-record.o
+read-records.o
+write-newline.o
+write-record.o
+write-records.o
